@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 final ThemeData customDarkTheme = ThemeData(
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: Colors.black,
+  scaffoldBackgroundColor: Colors.white,
+
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.black,
     foregroundColor: Colors.white,
@@ -10,12 +11,11 @@ final ThemeData customDarkTheme = ThemeData(
   ),
   colorScheme: ColorScheme.dark(
     primary: Colors.white,
-    secondary: Colors.white30,
-    background: Colors.white60,
-    surface: Colors.white70,
+    secondary: Colors.white,
+    surface: Colors.white,
   ),
   textTheme: TextTheme(
     bodyLarge: TextStyle(color: Colors.white, fontSize: 18),
-    bodyMedium: TextStyle(color: Colors.white70),
+    bodyMedium: TextStyle(color: Colors.white),
   ),
 );

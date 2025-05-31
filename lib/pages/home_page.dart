@@ -36,195 +36,168 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ],
       ),
-      body: GridView.builder(
-        itemCount: movies?.length ?? 0,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 5,
-          crossAxisSpacing: 5,
-          childAspectRatio: 2 / 3,
-          crossAxisCount: 2,
-        ),
-        itemBuilder: (context, index) {
-          MovieModel? newMovies = movies?[index];
-          final imageUrl = newMovies?.primaryImage;
-          final title = newMovies?.primaryTitle;
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          GridView.builder(
+            itemCount: movies?.length ?? 0,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 5,
+              crossAxisSpacing: 5,
+              childAspectRatio: 2 / 3,
+              crossAxisCount: 2,
+            ),
+            itemBuilder: (context, index) {
+              MovieModel? newMovies = movies?[index];
+              final imageUrl = newMovies?.primaryImage;
+              final title = newMovies?.primaryTitle;
 
-          return Column(
-            children: [
-              AspectRatio(
-                aspectRatio: 2 / 3,
-                child: Hero(
-                  tag: imageUrl ?? "No Image $index",
-                  child: InkWell(
-                    child:
-                        imageUrl != null
-                            ? Image.network(
-                              imageUrl,
-                              fit: BoxFit.cover,
-                              errorBuilder:
-                                  (context, error, stackTrace) =>
-                                      const Icon(Icons.broken_image),
-                            )
-                            : const Icon(Icons.image_not_supported),
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return SingleChildScrollView(
-                            child: Container(
-                              color: Colors.black,
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        icon: Icon(Icons.close),
+              return Column(
+                children: [
+                  AspectRatio(
+                    aspectRatio: 2 / 3,
+                    child: Hero(
+                      tag: imageUrl ?? "No Image $index",
+                      child: InkWell(
+                        child:
+                            imageUrl != null
+                                ? Image.network(
+                                  imageUrl,
+                                  fit: BoxFit.cover,
+                                  errorBuilder:
+                                      (context, error, stackTrace) =>
+                                          const Icon(Icons.broken_image),
+                                )
+                                : const Icon(Icons.image_not_supported),
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (BuildContext context) {
+                              return DraggableScrollableSheet(
+                                expand: false,
+                                initialChildSize: 0.95,
+                                minChildSize: 0.5,
+                                maxChildSize: 1.0,
+                                builder: (context, scrollController) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(20),
                                       ),
-                                    ],
-                                  ),
-                                  Text(
-                                    "$title",
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.white,
                                     ),
-                                  ),
-                                  Hero(
-                                    tag: imageUrl ?? "No Image $index",
-                                    child: Image.network(imageUrl ?? ""),
-                                  ),
-                                  SizedBox(
-                                    height: 200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "${newMovies?.description}",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
+                                    child: SingleChildScrollView(
+                                      controller: scrollController,
+                                      child: Column(
+                                        children: [
+                                          Stack(
                                             children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  14.0,
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.tv,
-                                                      color: Colors.white,
-                                                    ),
-                                                    Text(
-                                                      "${newMovies?.type}",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  14.0,
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.calendar_today,
-                                                      color: Colors.white,
-                                                    ),
-                                                    Text(
-                                                      "${newMovies?.startYear}",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  14.0,
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.star,
-                                                      color: Colors.white,
-                                                    ),
-                                                    Text(
-                                                      "${newMovies?.averageRating}",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  14.0,
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.location_on,
-                                                      color: Colors.white,
-                                                    ),
-                                                    Text(
-                                                      "${newMovies?.filmingLocations}",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  14.0,
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.movie,
-                                                      color: Colors.white,
-                                                    ),
-                                                    Text(
-                                                      "${newMovies?.trailer}",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ],
+                                              Align(
+                                                alignment: Alignment.topRight,
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.close,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            "$title",
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+
+                                          Container(
+                                            child:
+                                                imageUrl == null
+                                                    ? Placeholder()
+                                                    : Hero(
+                                                      tag: imageUrl,
+                                                      child: Image.network(
+                                                        imageUrl,
+                                                      ),
+                                                    ),
+                                          ),
+                                          SizedBox(height: 25),
+                                          SizedBox(
+                                            height: 200,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(
+                                                  "${newMovies?.description}",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                                SingleChildScrollView(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        newMovies?.interests
+                                                                ?.join(",") ??
+                                                            "",
+                                                        style: TextStyle(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .surface,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                                  );
+                                },
+                              );
+                            },
                           );
                         },
-                      );
-                    },
+                      ),
+                    ),
                   ),
-                ),
+                ],
+              );
+            },
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
-            ],
-          );
-        },
+            ),
+            height: MediaQuery.of(context).size.height / 15,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Icon(Icons.person),
+                Icon(Icons.home),
+                Icon(Icons.favorite),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
