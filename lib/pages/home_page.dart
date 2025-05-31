@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_project/controller/controller.dart';
+import 'package:movie_project/controller/theme_controller.dart';
 import 'package:movie_project/model/movie_model/movie_model.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
-
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }
@@ -22,28 +22,25 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final List<MovieModel>? movies = ref.watch(moviesContollerProvider);
-
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          "What Should i Watch",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.black,
+        title: Text("What Should i Watch"),
+
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.light_mode, color: Colors.white),
+            onPressed: () {
+              ref.read(themeModeProvider.notifier).toggleTheme();
+            },
+            icon: Icon(Icons.light_mode),
           ),
         ],
       ),
       body: GridView.builder(
         itemCount: movies?.length ?? 0,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 0,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 5,
           childAspectRatio: 2 / 3,
           crossAxisCount: 2,
         ),
@@ -99,7 +96,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     tag: imageUrl ?? "No Image $index",
                                     child: Image.network(imageUrl ?? ""),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     height: 200,
                                     child: Column(
                                       children: [
