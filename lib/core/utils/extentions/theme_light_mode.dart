@@ -6,7 +6,6 @@ final ThemeData customLightMode = ThemeData(
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.white,
     foregroundColor: Colors.white,
-    elevation: 0,
   ),
   colorScheme: ColorScheme.light(
     primary: Colors.white,

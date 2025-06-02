@@ -7,12 +7,11 @@ final ThemeData customDarkTheme = ThemeData(
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.black,
     foregroundColor: Colors.white,
-    elevation: 0,
   ),
   colorScheme: ColorScheme.dark(
     primary: Colors.white,
     secondary: Colors.white,
-    surface: Colors.white,
+    surface: const Color.fromARGB(255, 255, 255, 255),
   ),
   textTheme: TextTheme(
     bodyLarge: TextStyle(color: Colors.white, fontSize: 18),
