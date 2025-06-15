@@ -9,55 +9,38 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i4;
-import 'package:movie_project/pages/favorite_page.dart' as _i1;
-import 'package:movie_project/pages/home_page.dart' as _i2;
-import 'package:movie_project/pages/settings_page.dart' as _i3;
+import 'package:auto_route/auto_route.dart' as _i3;
+import 'package:movie_project/pages/home_page.dart' as _i1;
+import 'package:movie_project/pages/sign_in_page.dart' as _i2;
 
 /// generated route for
-/// [_i1.FavoritePage]
-class FavoriteRoute extends _i4.PageRouteInfo<void> {
-  const FavoriteRoute({List<_i4.PageRouteInfo>? children})
-    : super(FavoriteRoute.name, initialChildren: children);
-
-  static const String name = 'FavoriteRoute';
-
-  static _i4.PageInfo page = _i4.PageInfo(
-    name,
-    builder: (data) {
-      return const _i1.FavoritePage();
-    },
-  );
-}
-
-/// generated route for
-/// [_i2.HomePage]
-class HomeRoute extends _i4.PageRouteInfo<void> {
-  const HomeRoute({List<_i4.PageRouteInfo>? children})
+/// [_i1.HomePage]
+class HomeRoute extends _i3.PageRouteInfo<void> {
+  const HomeRoute({List<_i3.PageRouteInfo>? children})
     : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
+  static _i3.PageInfo page = _i3.PageInfo(
     name,
     builder: (data) {
-      return const _i2.HomePage();
+      return const _i1.HomePage();
     },
   );
 }
 
 /// generated route for
-/// [_i3.SettingsPage]
-class SettingsRoute extends _i4.PageRouteInfo<void> {
-  const SettingsRoute({List<_i4.PageRouteInfo>? children})
-    : super(SettingsRoute.name, initialChildren: children);
+/// [_i2.SignInPage]
+class SignInRoute extends _i3.PageRouteInfo<void> {
+  const SignInRoute({List<_i3.PageRouteInfo>? children})
+    : super(SignInRoute.name, initialChildren: children);
 
-  static const String name = 'SettingsRoute';
+  static const String name = 'SignInRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
+  static _i3.PageInfo page = _i3.PageInfo(
     name,
     builder: (data) {
-      return const _i3.SettingsPage();
+      return const _i2.SignInPage();
     },
   );
 }

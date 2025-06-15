@@ -4,7 +4,7 @@ import 'package:movie_project/controller/theme_controller.dart';
 import 'package:movie_project/core/router/app_router.dart';
 
 final appRouter = AppRouter();
-void main() {
+void main() async {
   runApp(ProviderScope(child: MyApp()));
 }
 
