@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:movie_project/core/endpoints.dart';
 import 'package:movie_project/exports.dart';
 import 'package:movie_project/model/movie_model/movie_model.dart';
 

@@ -38,7 +38,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
             ),
           ),
           AspectRatio(
-            aspectRatio: 5 / 4,
+            aspectRatio: 1,
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.black87,
@@ -52,6 +52,16 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 10,
+                      ),
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: TextFormField(

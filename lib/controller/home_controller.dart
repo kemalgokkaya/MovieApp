@@ -5,17 +5,19 @@ import 'package:movie_project/repositories/repositories.dart';
 class HomeController extends StateNotifier<List<MovieModel>?> {
   final Ref ref;
 
-  HomeController(this.ref) : super(null);
+  HomeController(super.state, this.ref);
   final MovieRepository _movieRepository = MovieRepository();
 
   Future getMovie() async {
     List<MovieModel>? response = await _movieRepository.getMovies();
     state = response;
+    ref.read(isLoadingProvider.notifier).state = false;
     return state;
   }
 }
 
 final moviesContollerProvider =
     StateNotifierProvider<HomeController, List<MovieModel>?>((ref) {
-      return HomeController(ref);
+      return HomeController(null, ref);
     });
+final isLoadingProvider = StateProvider((ref) => true);
