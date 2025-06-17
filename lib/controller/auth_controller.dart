@@ -7,8 +7,8 @@ class AuthController {
   AuthController({required this.authRepository});
 
   Future<void> signInWithEmailAndPassword({
-    required final email,
-    required final password,
+    required String email,
+    required String password,
   }) async {
     return authRepository.signInWithEmailAndPassword(
       email: email,
@@ -17,8 +17,8 @@ class AuthController {
   }
 
   Future<void> signUpWithEmailAndPassword({
-    required final email,
-    required final password,
+    required String email,
+    required String password,
   }) async {
     return authRepository.signUpWithEmailAndPassword(
       email: email,

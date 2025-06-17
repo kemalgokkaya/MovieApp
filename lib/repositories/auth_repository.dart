@@ -9,21 +9,28 @@ class AuthRepository {
   AuthRepository({required this.firebaseFirestore, required this.auth});
 
   Future<void> signInWithEmailAndPassword({
-    required dynamic email,
-    required dynamic password,
+    required String email,
+    required String password,
   }) async {
     await auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
   Future<void> signUpWithEmailAndPassword({
-    required dynamic email,
-    required dynamic password,
+    required String email,
+    required String password,
   }) async {
-    await auth.createUserWithEmailAndPassword(email: email, password: password);
+    try {
+      await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      throw Exception("Hata Yakalandi ${e.message}");
+    }
   }
 }
 
-final authRepositoryProvider = Provider(
+final authRepositoryProvider = Provider<AuthRepository>(
   (ref) => AuthRepository(
     firebaseFirestore: FirebaseFirestore.instance,
     auth: FirebaseAuth.instance,
