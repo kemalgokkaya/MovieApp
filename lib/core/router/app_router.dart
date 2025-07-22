@@ -5,8 +5,9 @@ import 'package:movie_project/core/router/app_router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: SignInRoute.page, initial: true, path: "/"),
-    AutoRoute(page: HomeRoute.page),
+    AutoRoute(initial: true, page: HomeRoute.page),
+    AutoRoute(page: FavoriteRoute.page),
+    AutoRoute(page: RecommendationRoute.page),
     AutoRoute(page: SignUpRoute.page),
   ];
 }

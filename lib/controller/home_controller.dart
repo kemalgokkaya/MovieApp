@@ -21,3 +21,11 @@ final moviesContollerProvider =
       return HomeController(null, ref);
     });
 final isLoadingProvider = StateProvider((ref) => true);
+
+final randomMovieProvider = Provider<MovieModel?>((ref) {
+  final movieList = ref.watch(moviesContollerProvider);
+  if (movieList == null || movieList.isEmpty) return null;
+
+  movieList.shuffle();
+  return movieList.first;
+});
