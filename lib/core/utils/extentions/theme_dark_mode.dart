@@ -5,7 +5,7 @@ final ThemeData customDarkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
 
   appBarTheme: AppBarTheme(
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.white,
     foregroundColor: Colors.white,
   ),
   colorScheme: ColorScheme.dark(

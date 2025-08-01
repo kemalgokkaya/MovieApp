@@ -39,3 +39,26 @@ abstract class MovieModel with _$MovieModel {
   factory MovieModel.fromJson(Map<String, dynamic> json) =>
       _$MovieModelFromJson(json);
 }
+
+extension MovieModelDatabase on MovieModel {
+  Map<String, dynamic> toMapForDb() {
+    return {
+      'id': id,
+      'title': primaryTitle,
+      'imageUrl': primaryImage,
+      'description': description,
+      'genres': genres?.join(','),
+    };
+  }
+
+  static MovieModel fromMap(Map<String, dynamic> map) {
+    return MovieModel(
+      id: map['id'],
+      primaryTitle: map['title'],
+      primaryImage: map['imageUrl'],
+      description: map['description'],
+      genres:
+          map['genres'] != null ? (map['genres'] as String).split(',') : null,
+    );
+  }
+}

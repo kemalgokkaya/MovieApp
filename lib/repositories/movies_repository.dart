@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_project/exports.dart';
 import 'package:movie_project/model/movie_model/movie_model.dart';
+import 'package:movie_project/repositories/base_repoistory.dart';
 
 class MovieRepository {
   final BaseRepository _baseRepository;
@@ -20,3 +22,7 @@ class MovieRepository {
         .toList();
   }
 }
+
+final moviesContollerProvider = Provider<MovieRepository>(
+  (ref) => MovieRepository(),
+);

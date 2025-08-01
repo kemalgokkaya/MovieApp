@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 final ThemeData customLightMode = ThemeData(
   brightness: Brightness.light,
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: Colors.black,
   appBarTheme: AppBarTheme(
-    backgroundColor: Colors.white,
-    foregroundColor: Colors.white,
+    backgroundColor: Colors.black,
+    foregroundColor: Colors.black,
   ),
   colorScheme: ColorScheme.light(
-    primary: Colors.white,
-    secondary: Colors.white,
-    surface: Colors.white,
+    primary: Colors.black,
+    secondary: Colors.black,
+    surface: Colors.black,
   ),
   textTheme: TextTheme(
-    bodyLarge: TextStyle(color: Colors.white, fontSize: 18),
-    bodyMedium: TextStyle(color: Colors.white),
+    bodyLarge: TextStyle(color: Colors.black, fontSize: 18),
+    bodyMedium: TextStyle(color: Colors.black),
   ),
 );
