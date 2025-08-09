@@ -153,7 +153,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                               print("$e");
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text("Hata oluştu"),
+                                  content: Text(
+                                    "E-mail veya şifrenizi kontrol ediniz",
+                                  ),
                                   backgroundColor: Colors.red,
                                 ),
                               );
