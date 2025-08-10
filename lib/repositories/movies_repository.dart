@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_project/exports.dart';
 import 'package:movie_project/model/movie_model/movie_model.dart';
@@ -24,13 +25,13 @@ class MovieRepository {
     if (_cachedMovies != null && _lastFetchTime != null) {
       final timeSinceLastFetch = DateTime.now().difference(_lastFetchTime!);
       if (timeSinceLastFetch < _cacheValidDuration) {
-        print("Movies loaded from cache: ${_cachedMovies!.length} movies");
+        debugPrint("Movies loaded from cache: ${_cachedMovies!.length} movies");
         return _cachedMovies;
       }
     }
 
     try {
-      print("Fetching movies from API...");
+      debugPrint("Fetching movies from API...");
       final response = await _baseRepository.executeRequest(
         RequestType.get,
         getAllMovies,
@@ -46,17 +47,17 @@ class MovieRepository {
         _cachedMovies = movies;
         _lastFetchTime = DateTime.now();
 
-        print("Movies fetched successfully: ${movies.length} movies");
+        debugPrint("Movies fetched successfully: ${movies.length} movies");
         return movies;
       } else {
-        print("No data received from API");
+        debugPrint("No data received from API");
         return _cachedMovies; // Return cached data if available
       }
     } catch (e) {
-      print("Error fetching movies: $e");
+      debugPrint("Error fetching movies: $e");
       // Return cached data if available, otherwise rethrow
       if (_cachedMovies != null) {
-        print("Returning cached movies due to API error");
+        debugPrint("Returning cached movies due to API error");
         return _cachedMovies;
       }
       rethrow;
@@ -67,7 +68,7 @@ class MovieRepository {
   void clearCache() {
     _cachedMovies = null;
     _lastFetchTime = null;
-    print("Movie cache cleared");
+    debugPrint("Movie cache cleared");
   }
 
   // Get cached movies if available
@@ -106,7 +107,7 @@ class MovieRepository {
         endIndex > movies.length ? movies.length : endIndex,
       );
     } catch (e) {
-      print("Error fetching movies with pagination: $e");
+      debugPrint("Error fetching movies with pagination: $e");
       rethrow;
     }
   }
@@ -128,7 +129,7 @@ class MovieRepository {
             genres.contains(lowercaseQuery);
       }).toList();
     } catch (e) {
-      print("Error searching movies: $e");
+      debugPrint("Error searching movies: $e");
       rethrow;
     }
   }
@@ -145,7 +146,7 @@ class MovieRepository {
         return genres.contains(lowercaseGenre);
       }).toList();
     } catch (e) {
-      print("Error filtering movies by genre: $e");
+      debugPrint("Error filtering movies by genre: $e");
       rethrow;
     }
   }

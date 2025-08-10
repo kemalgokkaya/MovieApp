@@ -148,9 +148,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                                     email: email,
                                     password: password,
                                   );
+                              if (!context.mounted) return;
+                              debugPrint("Giriş başarili");
                               context.replaceRoute(HomeRoute());
                             } catch (e) {
-                              print("$e");
+                              if (!context.mounted) return;
+                              debugPrint("$e");
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(

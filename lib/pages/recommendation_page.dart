@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:movie_project/controller/home_controller.dart';
 import 'package:movie_project/model/movie_model/movie_model.dart';
-import 'package:movie_project/controller/sqfllite_controller.dart';
 
 @RoutePage()
 class RecommendationPage extends ConsumerStatefulWidget {
@@ -36,9 +35,10 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Theme.of(context).colorScheme.primary.withOpacity(0.1),
-          Theme.of(context).colorScheme.background,
-          Theme.of(context).colorScheme.background,
+          Theme.of(context).colorScheme.primary.withAlpha(13),
+
+          Theme.of(context).colorScheme.surface,
+          Theme.of(context).colorScheme.surface,
         ],
       ),
     );
@@ -54,8 +54,9 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                  Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                  Theme.of(context).colorScheme.primary.withAlpha(13),
+
+                  Theme.of(context).colorScheme.primary.withAlpha(13),
                 ],
               ),
               borderRadius: BorderRadius.circular(20),
@@ -63,7 +64,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             child: Icon(
               Icons.movie,
               size: 80,
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+              color: Theme.of(context).colorScheme.primary.withAlpha(179),
             ),
           ),
           const SizedBox(height: 24),
@@ -72,7 +73,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.surface,
             ),
           ),
           const SizedBox(height: 8),
@@ -80,9 +81,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             'Try refreshing to get a new suggestion',
             style: TextStyle(
               fontSize: 14,
-              color: Theme.of(
-                context,
-              ).colorScheme.onBackground.withOpacity(0.7),
+              color: Theme.of(context).colorScheme.surface.withAlpha(179),
             ),
           ),
           const SizedBox(height: 24),
@@ -112,8 +111,8 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                  Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                  Theme.of(context).colorScheme.primary.withAlpha(13),
+                  Theme.of(context).colorScheme.primary.withAlpha(13),
                 ],
               ),
               borderRadius: BorderRadius.circular(20),
@@ -130,9 +129,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             "Finding your perfect movie...",
             style: TextStyle(
               fontSize: 16,
-              color: Theme.of(
-                context,
-              ).colorScheme.onBackground.withOpacity(0.7),
+              color: Theme.of(context).colorScheme.surface.withAlpha(179),
             ),
           ),
         ],
@@ -149,10 +146,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Colors.red.withOpacity(0.1),
-                  Colors.red.withOpacity(0.05),
-                ],
+                colors: [Colors.red.withAlpha(26), Colors.red.withAlpha(13)],
               ),
               borderRadius: BorderRadius.circular(20),
             ),
@@ -168,7 +162,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.surface,
             ),
           ),
           const SizedBox(height: 8),
@@ -176,9 +170,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             error.toString(),
             style: TextStyle(
               fontSize: 14,
-              color: Theme.of(
-                context,
-              ).colorScheme.onBackground.withOpacity(0.7),
+              color: Theme.of(context).colorScheme.surface.withAlpha(179),
             ),
             textAlign: TextAlign.center,
           ),
@@ -246,7 +238,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
                             Theme.of(context).colorScheme.primary,
                             Theme.of(
                               context,
-                            ).colorScheme.primary.withOpacity(0.7),
+                            ).colorScheme.primary.withAlpha(179),
                           ],
                         ),
                         borderRadius: BorderRadius.circular(16),
@@ -254,7 +246,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
                           BoxShadow(
                             color: Theme.of(
                               context,
-                            ).colorScheme.primary.withOpacity(0.3),
+                            ).colorScheme.primary.withAlpha(39),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -288,7 +280,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
                               fontSize: 15,
                               color: Theme.of(
                                 context,
-                              ).colorScheme.onBackground.withOpacity(0.7),
+                              ).colorScheme.surface.withAlpha(179),
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -320,7 +312,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withAlpha(51),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -371,7 +363,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withAlpha(38),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -396,7 +388,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withAlpha(38),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -417,8 +409,8 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
             end: Alignment.bottomCenter,
             colors: [
               Colors.transparent,
-              Colors.black.withOpacity(0.3),
-              Colors.black.withOpacity(0.8),
+              Colors.black.withAlpha(77),
+              Colors.black.withAlpha(204),
             ],
           ),
         ),
@@ -437,7 +429,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withAlpha(77),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -470,7 +462,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Theme.of(context).colorScheme.surface,
           ),
           textAlign: TextAlign.center,
           maxLines: 2,
@@ -481,10 +473,10 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              color: Theme.of(context).colorScheme.primary.withAlpha(26),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                color: Theme.of(context).colorScheme.primary.withAlpha(77),
                 width: 1,
               ),
             ),
@@ -506,7 +498,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withAlpha(26),
                   blurRadius: 10,
                   offset: const Offset(0, 5),
                 ),
@@ -516,9 +508,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
               movie.description!,
               style: TextStyle(
                 fontSize: 14,
-                color: Theme.of(
-                  context,
-                ).colorScheme.onBackground.withOpacity(0.8),
+                color: Theme.of(context).colorScheme.surface.withAlpha(204),
                 height: 1.4,
               ),
               textAlign: TextAlign.center,
@@ -554,7 +544,7 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
                 elevation: 8,
                 shadowColor: Theme.of(
                   context,
-                ).colorScheme.primary.withOpacity(0.3),
+                ).colorScheme.primary.withAlpha(77),
               ),
             ),
           ),

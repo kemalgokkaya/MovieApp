@@ -100,9 +100,9 @@ class _HomePageState extends ConsumerState<HomePage>
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Theme.of(context).colorScheme.primary.withOpacity(0.1),
-          Theme.of(context).colorScheme.background,
-          Theme.of(context).colorScheme.background,
+          Theme.of(context).colorScheme.primary.withAlpha(26),
+          Theme.of(context).colorScheme.surface,
+          Theme.of(context).colorScheme.surface,
         ],
       ),
     );
@@ -129,13 +129,13 @@ class _HomePageState extends ConsumerState<HomePage>
         gradient: LinearGradient(
           colors: [
             Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.primary.withOpacity(0.7),
+            Theme.of(context).colorScheme.primary.withAlpha(179),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.primary.withAlpha(77),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -161,7 +161,7 @@ class _HomePageState extends ConsumerState<HomePage>
           "Discover amazing films",
           style: TextStyle(
             fontSize: 14,
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.surface.withAlpha(179),
           ),
         ),
       ],
@@ -175,7 +175,7 @@ class _HomePageState extends ConsumerState<HomePage>
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withAlpha(27),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -258,7 +258,7 @@ class _HomePageState extends ConsumerState<HomePage>
               gradient: LinearGradient(
                 colors: [
                   Theme.of(context).colorScheme.primary,
-                  Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                  Theme.of(context).colorScheme.primary.withAlpha(128),
                 ],
               ),
               borderRadius: BorderRadius.circular(2),
@@ -270,7 +270,7 @@ class _HomePageState extends ConsumerState<HomePage>
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.surface,
             ),
           ),
           const Spacer(),
@@ -278,9 +278,7 @@ class _HomePageState extends ConsumerState<HomePage>
             "$movieCount movies",
             style: TextStyle(
               fontSize: 14,
-              color: Theme.of(
-                context,
-              ).colorScheme.onBackground.withOpacity(0.6),
+              color: Theme.of(context).colorScheme.surface.withAlpha(153),
             ),
           ),
         ],
@@ -350,7 +348,7 @@ class _HomePageState extends ConsumerState<HomePage>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withAlpha(26),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -389,7 +387,6 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 }
 
-// Optimized Movie Card Widget
 class MovieCard extends StatelessWidget {
   final MovieModel movie;
   final bool isFavorited;
@@ -398,6 +395,7 @@ class MovieCard extends StatelessWidget {
   final VoidCallback onFavoriteToggle;
 
   const MovieCard({
+    super.key,
     required this.movie,
     required this.isFavorited,
     required this.currentUser,
@@ -416,7 +414,7 @@ class MovieCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withAlpha(26),
                 blurRadius: 12,
                 offset: const Offset(0, 6),
               ),
@@ -447,7 +445,7 @@ class MovieCard extends StatelessWidget {
                 fit: BoxFit.cover,
                 placeholder: (context, url) => _buildPlaceholder(),
                 errorWidget: (context, url, error) => _buildErrorWidget(),
-                memCacheWidth: 300, // Optimize memory usage
+                memCacheWidth: 300,
                 memCacheHeight: 450,
               )
               : _buildPlaceholder(),
@@ -485,8 +483,8 @@ class MovieCard extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               Colors.transparent,
-              Colors.black.withOpacity(0.3),
-              Colors.black.withOpacity(0.8),
+              Colors.black.withAlpha(77),
+              Colors.black.withAlpha(204),
             ],
           ),
         ),
@@ -500,9 +498,9 @@ class MovieCard extends StatelessWidget {
       right: 12,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.5),
+          color: Colors.black.withAlpha(128),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
+          border: Border.all(color: Colors.white.withAlpha(77), width: 1),
         ),
         child: IconButton(
           icon: Icon(
@@ -544,7 +542,7 @@ class MovieCard extends StatelessWidget {
                 Text(
                   "4.5",
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withAlpha(208),
                     fontSize: 12,
                   ),
                 ),
@@ -566,7 +564,6 @@ class MovieCard extends StatelessWidget {
   }
 }
 
-// Optimized Movie Detail Sheet
 class _MovieDetailSheet extends StatelessWidget {
   final MovieModel movie;
 
@@ -591,7 +588,7 @@ class _MovieDetailSheet extends StatelessWidget {
                           ),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
-                            Colors.black.withOpacity(0.8),
+                            Colors.black.withAlpha(208),
                             BlendMode.darken,
                           ),
                         )
@@ -634,9 +631,9 @@ class _MovieDetailSheet extends StatelessWidget {
       alignment: Alignment.topRight,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.5),
+          color: Colors.black.withAlpha(127),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
+          border: Border.all(color: Colors.white.withAlpha(77), width: 1),
         ),
         child: IconButton(
           icon: const Icon(Icons.close, color: Colors.white),
@@ -685,9 +682,9 @@ class _MovieDetailSheet extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
+            color: Colors.white.withAlpha(38),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
+            border: Border.all(color: Colors.white.withAlpha(77), width: 1),
           ),
           child: const Text(
             "2024",
@@ -705,7 +702,7 @@ class _MovieDetailSheet extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withAlpha(77),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -798,7 +795,7 @@ class _MovieDetailSheet extends StatelessWidget {
                             Theme.of(context).colorScheme.primary,
                             Theme.of(
                               context,
-                            ).colorScheme.primary.withOpacity(0.7),
+                            ).colorScheme.primary.withAlpha(179),
                           ],
                         ),
                         borderRadius: BorderRadius.circular(20),
@@ -806,7 +803,7 @@ class _MovieDetailSheet extends StatelessWidget {
                           BoxShadow(
                             color: Theme.of(
                               context,
-                            ).colorScheme.primary.withOpacity(0.3),
+                            ).colorScheme.primary.withAlpha(77),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),

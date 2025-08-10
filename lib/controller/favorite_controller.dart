@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/movie_model/movie_model.dart';
+import 'package:flutter/material.dart';
 
 // Performance optimized favorite controller
 class FavoriteMoviesNotifier extends StateNotifier<List<MovieModel>> {
@@ -30,7 +31,7 @@ class FavoriteMoviesNotifier extends StateNotifier<List<MovieModel>> {
       if (_isCacheValid(uid)) {
         final cachedFavorites = _firebaseCache[uid] ?? [];
         if (cachedFavorites.any((m) => m.id == movie.id)) {
-          print("Movie already in Firebase cache for $uid");
+          debugPrint("Movie already in Firebase cache for $uid");
           return;
         }
       }
@@ -51,14 +52,13 @@ class FavoriteMoviesNotifier extends StateNotifier<List<MovieModel>> {
 
       // Update cache
       _updateCache(uid, movie, true);
-      print("$uid kullanıcısının favorisi başarıyla eklendi");
+      debugPrint("$uid kullanıcısının favorisi başarıyla eklendi");
     } catch (e) {
-      print("Favori ekleme hatası: $e");
+      debugPrint("Favori ekleme hatası: $e");
       rethrow;
     }
   }
 
-  // Optimized Firebase delete with caching
   Future<void> deleteFavoriteFromFirebase(MovieModel movie, String uid) async {
     try {
       await FirebaseFirestore.instance
@@ -68,20 +68,17 @@ class FavoriteMoviesNotifier extends StateNotifier<List<MovieModel>> {
           .doc("${movie.id}")
           .delete();
 
-      // Update cache
       _updateCache(uid, movie, false);
 
-      // Local state'i güncelle
       state = state.where((m) => m.id != movie.id).toList();
 
-      print("$uid kullanıcısının favorisi başarıyla silindi");
+      debugPrint("$uid kullanıcısının favorisi başarıyla silindi");
     } catch (e) {
-      print("Favori silme hatası: $e");
+      debugPrint("Favori silme hatası: $e");
       rethrow;
     }
   }
 
-  // Batch operations for better performance
   Future<void> saveMultipleToFirebase(
     List<MovieModel> movies,
     String uid,
@@ -107,20 +104,18 @@ class FavoriteMoviesNotifier extends StateNotifier<List<MovieModel>> {
       }
 
       await batch.commit();
-      print("${movies.length} favori film başarıyla eklendi");
+      debugPrint("${movies.length} favori film başarıyla eklendi");
     } catch (e) {
-      print("Toplu favori ekleme hatası: $e");
+      debugPrint("Toplu favori ekleme hatası: $e");
       rethrow;
     }
   }
 
-  // Optimized Firebase load with caching
   Future<void> loadFavoritesFromFirebase(String uid) async {
     try {
-      // Check cache first
       if (_isCacheValid(uid) && _firebaseCache.containsKey(uid)) {
         state = _firebaseCache[uid]!;
-        print("Favoriler cache'den yüklendi: ${state.length} film");
+        debugPrint("Favoriler cache'den yüklendi: ${state.length} film");
         return;
       }
 
@@ -143,19 +138,17 @@ class FavoriteMoviesNotifier extends StateNotifier<List<MovieModel>> {
             );
           }).toList();
 
-      // Update cache
       _firebaseCache[uid] = favorites;
       _lastFirebaseSync = DateTime.now();
 
       state = favorites;
-      print("Favoriler başarıyla yüklendi: ${favorites.length} film");
+      debugPrint("Favoriler başarıyla yüklendi: ${favorites.length} film");
     } catch (e) {
-      print("Favorileri yükleme hatası: $e");
+      debugPrint("Favorileri yükleme hatası: $e");
       rethrow;
     }
   }
 
-  // Clear all favorites
   Future<void> clearAllFavorites(String uid) async {
     try {
       final snapshot =
@@ -172,13 +165,12 @@ class FavoriteMoviesNotifier extends StateNotifier<List<MovieModel>> {
 
       await batch.commit();
 
-      // Clear cache and state
       _firebaseCache.remove(uid);
       state = [];
 
-      print("Tüm favoriler başarıyla silindi");
+      debugPrint("Tüm favoriler başarıyla silindi");
     } catch (e) {
-      print("Favorileri temizleme hatası: $e");
+      debugPrint("Favorileri temizleme hatası: $e");
       rethrow;
     }
   }
@@ -216,7 +208,6 @@ class FavoriteMoviesNotifier extends StateNotifier<List<MovieModel>> {
     _lastFirebaseSync = null;
   }
 
-  // Get cached favorites for a user
   List<MovieModel>? getCachedFavorites(String uid) {
     if (_isCacheValid(uid)) {
       return _firebaseCache[uid];
@@ -225,18 +216,15 @@ class FavoriteMoviesNotifier extends StateNotifier<List<MovieModel>> {
   }
 }
 
-// Optimized providers
 final favoriteMoviesProvider =
     StateNotifierProvider<FavoriteMoviesNotifier, List<MovieModel>>(
       (ref) => FavoriteMoviesNotifier(),
     );
 
-// Provider for favorite count
 final favoriteCountProvider = Provider<int>((ref) {
   return ref.watch(favoriteMoviesProvider).length;
 });
 
-// Provider for checking if a movie is favorited
 final isMovieFavoritedProvider = Provider.family<bool, MovieModel>((
   ref,
   movie,

@@ -39,7 +39,7 @@ class HomeController extends StateNotifier<AsyncValue<List<MovieModel>>> {
       }
     } catch (e) {
       showSnackBar('❌ Hata: $e', Colors.red.shade400);
-      print(" Hata Yakalandi $e");
+      debugPrint('Favori işlemi sirasinda hata: $e');
     }
   }
 
