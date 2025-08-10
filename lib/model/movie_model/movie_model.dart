@@ -7,6 +7,27 @@ part 'movie_model.g.dart';
 
 @freezed
 abstract class MovieModel with _$MovieModel {
+  // Map'e dönüştürme
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': primaryTitle,
+      'posterUrl': primaryImage,
+      'description': description,
+      'releaseDate': releaseDate,
+    };
+  }
+
+  // Map'ten nesne oluşturma
+  factory MovieModel.fromMap(Map<String, dynamic> map) {
+    return MovieModel(
+      id: map['id']?.toString(),
+      primaryTitle: map['title'],
+      primaryImage: map['posterUrl'],
+      description: map['description'],
+      releaseDate: map['releaseDate'],
+    );
+  }
   factory MovieModel({
     String? id,
     String? url,

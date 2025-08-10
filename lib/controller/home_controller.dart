@@ -1,9 +1,48 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_project/model/movie_model/movie_model.dart';
 import 'package:movie_project/repositories/repositories.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:movie_project/controller/favorite_controller.dart';
+import 'package:movie_project/controller/sqfllite_controller.dart';
 
 // Performance optimized controller with caching
 class HomeController extends StateNotifier<AsyncValue<List<MovieModel>>> {
+  // Favori işlemleri (hem Firebase hem Sqflite)
+  Future<void> handleFavoriteToggle(
+    MovieModel movie,
+    User? currentUser,
+    String uid,
+    Function(String, Color) showSnackBar,
+  ) async {
+    if (currentUser == null) {
+      showSnackBar('Lütfen önce giriş yapın', Colors.red.shade400);
+      return;
+    }
+
+    ref.read(favoriteMoviesProvider.notifier).toggleFavorite(movie);
+
+    try {
+      final sqfliteController = SqflliteController();
+      if (ref.watch(favoriteMoviesProvider.notifier).isFavorite(movie)) {
+        await ref
+            .read(favoriteMoviesProvider.notifier)
+            .saveToFirebase(movie, uid);
+        await sqfliteController.insertMovie(movie);
+        showSnackBar('❤️ Favorilere eklendi', Colors.green.shade400);
+      } else {
+        await ref
+            .read(favoriteMoviesProvider.notifier)
+            .deleteFavoriteFromFirebase(movie, uid);
+        await sqfliteController.deleteMovie(int.tryParse(movie.id ?? "0") ?? 0);
+        showSnackBar('💔 Favorilerden çıkarıldı', Colors.orange.shade400);
+      }
+    } catch (e) {
+      showSnackBar('❌ Hata: $e', Colors.red.shade400);
+      print(" Hata Yakalandi $e");
+    }
+  }
+
   final Ref ref;
   final MovieRepository _movieRepository = MovieRepository();
 

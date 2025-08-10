@@ -216,6 +216,17 @@ String toString() {
   return 'MovieModel(id: $id, url: $url, primaryTitle: $primaryTitle, originalTitle: $originalTitle, type: $type, description: $description, primaryImage: $primaryImage, trailer: $trailer, contentRating: $contentRating, startYear: $startYear, endYear: $endYear, releaseDate: $releaseDate, interests: $interests, countriesOfOrigin: $countriesOfOrigin, externalLinks: $externalLinks, spokenLanguages: $spokenLanguages, filmingLocations: $filmingLocations, productionCompanies: $productionCompanies, budget: $budget, grossWorldwide: $grossWorldwide, genres: $genres, isAdult: $isAdult, runtimeMinutes: $runtimeMinutes, averageRating: $averageRating, numVotes: $numVotes, metascore: $metascore)';
 }
 
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': primaryTitle,
+      'posterUrl': primaryImage,
+      'description': description,
+      'releaseDate': releaseDate,
+    };
+  }
+
 
 }
 

@@ -326,28 +326,9 @@ class _HomePageState extends ConsumerState<HomePage>
     User? currentUser,
     String uid,
   ) async {
-    if (currentUser == null) {
-      _showSnackBar('Lütfen önce giriş yapın', Colors.red.shade400);
-      return;
-    }
-
-    ref.read(favoriteMoviesProvider.notifier).toggleFavorite(movie);
-
-    try {
-      if (ref.watch(favoriteMoviesProvider.notifier).isFavorite(movie)) {
-        await ref
-            .read(favoriteMoviesProvider.notifier)
-            .saveToFirebase(movie, uid);
-        _showSnackBar('❤️ Favorilere eklendi', Colors.green.shade400);
-      } else {
-        await ref
-            .read(favoriteMoviesProvider.notifier)
-            .deleteFavoriteFromFirebase(movie, uid);
-        _showSnackBar('💔 Favorilerden çıkarıldı', Colors.orange.shade400);
-      }
-    } catch (e) {
-      _showSnackBar('❌ Hata: $e', Colors.red.shade400);
-    }
+    await ref
+        .read(moviesContollerProvider.notifier)
+        .handleFavoriteToggle(movie, currentUser, uid, _showSnackBar);
   }
 
   void _showSnackBar(String message, Color backgroundColor) {

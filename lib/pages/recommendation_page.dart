@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:movie_project/controller/home_controller.dart';
 import 'package:movie_project/model/movie_model/movie_model.dart';
+import 'package:movie_project/controller/sqfllite_controller.dart';
 
 @RoutePage()
 class RecommendationPage extends ConsumerStatefulWidget {
@@ -227,14 +228,79 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
   Widget _buildRecommendationContent(MovieModel movie) {
     return Column(
       children: [
-        _buildCustomAppBar(),
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
+                // Başlık, alt başlık ve ikon ortada
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).colorScheme.primary,
+                            Theme.of(
+                              context,
+                            ).colorScheme.primary.withOpacity(0.7),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.auto_awesome,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Movie Recommendation",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                              letterSpacing: 0.5,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            "Your perfect match",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onBackground.withOpacity(0.7),
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 32),
                 _buildMovieCard(movie),
                 const SizedBox(height: 24),
+                const SizedBox(height: 16),
                 _buildMovieInfo(movie),
                 const SizedBox(height: 24),
                 _buildActionButtons(),
@@ -244,91 +310,6 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildCustomAppBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      child: Row(
-        children: [
-          // Geri tuşu
-          GestureDetector(
-            onTap: () => context.router.pop(),
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                color: Theme.of(context).colorScheme.primary,
-                size: 20,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          // Ana ikon
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primary,
-                  Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.auto_awesome,
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
-          const SizedBox(width: 16),
-          // Başlık
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Movie Recommendation",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Text(
-                  "Your perfect match",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onBackground.withOpacity(0.7),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -379,23 +360,51 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
 
   Widget _buildPlaceholder() {
     return Container(
+      width: 120,
+      height: 120,
       decoration: BoxDecoration(
+        shape: BoxShape.circle,
         gradient: LinearGradient(
-          colors: [Colors.grey.shade300, Colors.grey.shade400],
+          colors: [Colors.indigo.shade400, Colors.purple.shade300],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
-      child: const Icon(Icons.movie, size: 80, color: Colors.white),
+      child: const Center(
+        child: Icon(Icons.movie, size: 64, color: Colors.white),
+      ),
     );
   }
 
   Widget _buildErrorWidget() {
     return Container(
+      width: 120,
+      height: 120,
       decoration: BoxDecoration(
+        shape: BoxShape.circle,
         gradient: LinearGradient(
-          colors: [Colors.grey.shade300, Colors.grey.shade400],
+          colors: [Colors.red.shade400, Colors.orange.shade300],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
-      child: const Icon(Icons.broken_image, size: 80, color: Colors.white),
+      child: const Center(
+        child: Icon(Icons.broken_image, size: 64, color: Colors.white),
+      ),
     );
   }
 
@@ -553,4 +562,6 @@ class _RecommendationPageState extends ConsumerState<RecommendationPage> {
       ),
     );
   }
+
+  // Favori butonu
 }
